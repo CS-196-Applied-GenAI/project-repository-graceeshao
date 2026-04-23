@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.nuevents.scraper</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/graceshao/Downloads/nu-events/backend/.venv/bin/python</string>
+        <string>/Users/graceshao/Downloads/nu-events/backend/scripts/scheduled_scrape.py</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/graceshao/Downloads/nu-events/backend</string>
+
+    <!-- Run every 1 hour 15 minutes (4500 seconds) -->
+    <key>StartInterval</key>
+    <integer>4500</integer>
+
+    <!-- Also run shortly after load (e.g., after boot) -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- Environment variables -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+        <key>GMAIL_USER_EMAIL</key>
+        <string>graceshao2026@u.northwestern.edu</string>
+    </dict>
+
+    <!-- Log stdout and stderr -->
+    <key>StandardOutPath</key>
+    <string>/Users/graceshao/Library/Logs/nu-events/launchd-stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/graceshao/Library/Logs/nu-events/launchd-stderr.log</string>
+
+    <!-- Don't retry immediately on failure -->
+    <key>ThrottleInterval</key>
+    <integer>300</integer>
+</dict>
+</plist>
