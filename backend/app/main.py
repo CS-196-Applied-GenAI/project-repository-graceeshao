@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -6,11 +7,20 @@ from fastapi.staticfiles import StaticFiles
 from starlette.middleware.sessions import SessionMiddleware
 
 from . import models  # noqa: F401  (registers tables on Base.metadata)
-from .database import Base, engine
+from .database import Base, SessionLocal, engine
 from .routers import auth, events, feed, friends, groups, notifications, presence, rsvps
-from .security import SESSION_COOKIE, SESSION_SECRET
+from .security import PRODUCTION, SESSION_COOKIE, SESSION_SECRET
 
 Base.metadata.create_all(bind=engine)
+
+# Render's free tier has an ephemeral filesystem — every cold boot loses the
+# SQLite file. PORCH_AUTOSEED=1 re-seeds the demo data on startup whenever the
+# table is empty, so the deployed app always has friends + events to show.
+if os.environ.get("PORCH_AUTOSEED") == "1":
+    with SessionLocal() as _db:
+        if _db.query(models.User).count() == 0:
+            from .seed import seed
+            seed()
 
 app = FastAPI(
     title="Porch",
@@ -23,7 +33,7 @@ app.add_middleware(
     secret_key=SESSION_SECRET,
     session_cookie=SESSION_COOKIE,
     same_site="lax",
-    https_only=False,  # Set True behind HTTPS in production.
+    https_only=PRODUCTION,
     max_age=60 * 60 * 24 * 30,  # 30 days
 )
 
