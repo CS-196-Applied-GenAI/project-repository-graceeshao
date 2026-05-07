@@ -1,0 +1,1092 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Porch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:        #F4EFE3;     /* warm linen */
+    --bg-2:      #EAE3D2;
+    --card:      #FBF7EC;
+    --ink:       #2A2018;     /* warm dark brown */
+    --ink-2:     #5B4A3B;
+    --ink-3:     #9A8B78;
+    --rule:      rgba(42, 32, 24, 0.10);
+    --rule-2:    rgba(42, 32, 24, 0.20);
+
+    /* friend / friend-group palette */
+    --g-gym:     #B8623A;     /* clay */
+    --g-work:    #4A6E7A;     /* slate */
+    --g-college: #C18A2B;     /* honey */
+    --g-close:   #2F6B4A;     /* moss */
+    --g-self:    #7A4E8C;     /* plum */
+
+    --accent:    #2F5D3A;     /* porch green */
+  }
+  *{ box-sizing: border-box; }
+  html, body{
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    letter-spacing: -0.005em;
+  }
+  body{
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(184, 98, 58, 0.04) 0, transparent 40%),
+      radial-gradient(circle at 85% 70%, rgba(47, 93, 58, 0.04) 0, transparent 45%);
+  }
+  button{ font: inherit; cursor: pointer; font-family: inherit; }
+  a{ color: inherit; text-decoration: none; }
+
+  /* Header */
+  .hdr{
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 28px;
+    background: var(--bg);
+  }
+  .brand{
+    display: flex; align-items: center; gap: 10px;
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+  }
+  .brand .house{
+    width: 32px; height: 32px;
+    display: grid; place-items: center;
+    color: var(--accent);
+  }
+  .brand em{ font-style: italic; color: var(--accent); }
+
+  .nav{ display: flex; gap: 4px; }
+  .nav a{
+    padding: 7px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+  .nav a.on{ background: var(--accent); color: #fff; }
+  .nav a:hover:not(.on){ background: rgba(42,32,24,0.05); }
+
+  .hdr-right{ display: flex; align-items: center; gap: 10px; }
+  .icon-btn{
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--rule-2);
+    background: var(--card);
+    display: grid; place-items: center;
+    color: var(--ink-2);
+    position: relative;
+  }
+  .icon-btn .dot{
+    position: absolute; top: 6px; right: 6px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--g-gym);
+    border: 2px solid var(--card);
+  }
+  .avatar{
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--g-self);
+    color: #fff;
+    display: grid; place-items: center;
+    font-weight: 600; font-size: 13px;
+    font-family: "Fraunces", serif;
+  }
+
+  .page{
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 16px 28px 64px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 28px;
+    align-items: start;
+  }
+
+  .strip{
+    grid-column: 1 / -1;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 24px;
+    padding: 16px 0 24px;
+  }
+  .greeting h1{
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 500;
+    font-size: 38px;
+    letter-spacing: -0.025em;
+    line-height: 1;
+    margin: 0 0 8px;
+  }
+  .greeting h1 em{ font-style: italic; color: var(--accent); }
+  .greeting p{
+    margin: 0;
+    color: var(--ink-3);
+    font-size: 13.5px;
+    line-height: 1.4;
+  }
+
+  .cta{
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 12px 18px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 100px;
+    border: none;
+    font-weight: 500;
+    font-size: 13.5px;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.06);
+  }
+  .cta:hover{ background: #234b2d; }
+  .cta .pulse{
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #A8D89B;
+    box-shadow: 0 0 0 0 rgba(168, 216, 155, 0.8);
+    animation: pulse 1.8s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{ box-shadow: 0 0 0 0 rgba(168,216,155,0.7); }
+    70%{ box-shadow: 0 0 0 8px rgba(168,216,155,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(168,216,155,0); }
+  }
+
+  .panel{
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.02), 0 8px 18px -12px rgba(60, 40, 20, 0.12);
+  }
+
+  /* Calendar header */
+  .cal-head{
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 22px 14px;
+    gap: 12px;
+  }
+  .cal-title{ display: flex; align-items: baseline; gap: 8px; }
+  .cal-title .month{
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: -0.015em;
+  }
+  .cal-title .year{
+    font-size: 12px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .cal-nav{ display: flex; gap: 4px; align-items: center; }
+  .cal-nav button{
+    height: 30px;
+    padding: 0 12px;
+    border-radius: 100px;
+    border: 1px solid var(--rule-2);
+    background: var(--card);
+    color: var(--ink-2);
+    display: grid; place-items: center;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .cal-nav button.icon{ width: 30px; padding: 0; }
+  .seg{
+    display: inline-flex;
+    border: 1px solid var(--rule-2);
+    border-radius: 100px;
+    padding: 2px;
+    margin-left: 6px;
+  }
+  .seg button{
+    border: none; background: transparent;
+    padding: 5px 12px;
+    border-radius: 100px;
+    font-size: 12px; font-weight: 500;
+    color: var(--ink-3);
+  }
+  .seg button.on{ background: var(--accent); color: #fff; }
+
+  .week-wrap{ border-top: 1px solid var(--rule); }
+  .week-head{
+    display: grid;
+    grid-template-columns: 56px repeat(7, 1fr);
+  }
+  .week-body{
+    display: grid;
+    grid-template-columns: 56px repeat(7, 1fr);
+    max-height: 540px;
+    overflow-y: auto;
+  }
+  .dow{
+    padding: 12px 8px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 11px;
+    color: var(--ink-3);
+    text-align: center;
+    font-weight: 500;
+  }
+  .dow.gutter{ border-right: 1px solid var(--rule); }
+  .dow .num{
+    display: block;
+    font-weight: 500;
+    font-size: 19px;
+    color: var(--ink);
+    margin-top: 2px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-family: "Fraunces", serif;
+  }
+  .dow.today .num{ color: var(--accent); }
+  .dow.today::after{
+    content: "";
+    display: block;
+    width: 18px; height: 2px;
+    border-radius: 2px;
+    background: var(--accent);
+    margin: 6px auto 0;
+  }
+
+  .day-col{
+    position: relative;
+    height: 1024px;
+    border-right: 1px solid var(--rule);
+    background:
+      repeating-linear-gradient(to bottom,
+        transparent 0 64px,
+        var(--rule) 64px 65px);
+    overflow: hidden;
+  }
+  .day-col:last-child{ border-right: none; }
+  .day-col.today{ background-color: rgba(47, 93, 58, 0.025); }
+
+  .gutter-col{
+    border-right: 1px solid var(--rule);
+    position: relative;
+    height: 1024px;
+    background: transparent;
+  }
+  .hour{
+    position: absolute;
+    right: 8px;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+
+  .now-line{
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: var(--g-gym);
+    z-index: 4;
+    pointer-events: none;
+  }
+  .now-line::before{
+    content: "";
+    position: absolute;
+    left: -4px; top: -3px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--g-gym);
+  }
+
+  .ev{
+    position: absolute;
+    left: 3px; right: 3px;
+    border-radius: 6px;
+    padding: 6px 8px 7px;
+    background: var(--g, var(--ink));
+    color: #fff;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 2;
+    border-left: 3px solid rgba(0,0,0,0.18);
+  }
+  .ev:hover{ z-index: 3; filter: brightness(1.05); }
+  .ev .ev-title{
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .ev .ev-meta{
+    font-size: 10.5px;
+    opacity: 0.85;
+    margin-top: 2px;
+    font-weight: 500;
+  }
+  .ev.tentative{
+    background: var(--card);
+    color: var(--g, var(--ink));
+    border: 1px dashed var(--g, var(--ink));
+    border-left-width: 3px;
+  }
+
+  .g-gym{     --g: var(--g-gym); }
+  .g-work{    --g: var(--g-work); }
+  .g-college{ --g: var(--g-college); }
+  .g-close{   --g: var(--g-close); }
+  .g-self{    --g: var(--g-self); }
+
+  .legend{
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 12px 22px 18px;
+    border-top: 1px solid var(--rule);
+  }
+  .leg{
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 5px 11px;
+    border-radius: 100px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--ink-2);
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .leg .swatch{
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--g, var(--ink));
+  }
+  .leg.off{ opacity: 0.4; }
+
+  /* What's happening — friend group tabs */
+  .feed-head{
+    padding: 18px 22px 4px;
+  }
+  .feed-head h2{
+    margin: 0 0 14px;
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+  }
+  .feed-head h2 em{ font-style: italic; color: var(--accent); }
+
+  .group-tabs{
+    display: flex; gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 0 -22px;
+    padding: 0 22px 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .group-tabs::-webkit-scrollbar{ display: none; }
+  .gtab{
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 14px;
+    border-radius: 100px;
+    border: 1px solid var(--rule-2);
+    background: transparent;
+    font-size: 13px; font-weight: 500;
+    color: var(--ink-2);
+    white-space: nowrap;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .gtab .swatch{
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--g, var(--ink));
+  }
+  .gtab.on{
+    background: var(--g, var(--ink));
+    color: #fff;
+    border-color: var(--g, var(--ink));
+  }
+  .gtab.on .swatch{
+    background: rgba(255,255,255,0.85);
+  }
+  .gtab.all.on{
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .gtab.all .swatch{ display: none; }
+
+  .feed{ display: flex; flex-direction: column; padding: 0; }
+  .feed-day{
+    padding: 16px 22px 6px;
+    font-size: 11px;
+    color: var(--ink-3);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .feed-day strong{
+    color: var(--ink); font-weight: 600;
+    font-family: "Fraunces", serif;
+    font-size: 13px;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    margin-right: 6px;
+  }
+
+  .row{
+    display: grid;
+    grid-template-columns: 4px 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 14px 22px;
+    border-top: 1px dashed var(--rule);
+    cursor: pointer;
+    position: relative;
+  }
+  .row:hover{ background: rgba(42,32,24,0.025); }
+  .row .stripe{
+    position: absolute;
+    left: 22px;
+    top: 18px;
+    bottom: 18px;
+    width: 3px;
+    border-radius: 2px;
+    background: var(--g, var(--ink));
+  }
+  .row .stripe-spacer{ width: 4px; }
+  .row .body{ min-width: 0; padding-left: 8px; }
+  .row .who{
+    display: flex; align-items: center; gap: 7px;
+    margin-bottom: 5px;
+  }
+  .row .who .av{
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--g, var(--ink));
+    color: #fff;
+    display: grid; place-items: center;
+    font-size: 10px; font-weight: 600;
+    font-family: "Fraunces", serif;
+  }
+  .row .who .name{
+    font-weight: 500;
+    font-size: 12.5px;
+    color: var(--ink-2);
+  }
+  .row .who .grp{
+    font-size: 12px;
+    color: var(--g, var(--ink-3));
+    font-weight: 500;
+  }
+  .row .title{
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-size: 17px;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    margin: 0 0 3px;
+    color: var(--ink);
+  }
+  .row .meta{
+    font-size: 12.5px;
+    color: var(--ink-3);
+  }
+  .row .meta .when{ color: var(--ink-2); font-weight: 500; }
+
+  .rsvp{
+    display: flex; gap: 6px;
+    align-items: center;
+  }
+  .rsvp button{
+    padding: 7px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--rule-2);
+    background: var(--card);
+    font-size: 12px; font-weight: 500;
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+  .rsvp button:hover{ border-color: var(--ink-2); color: var(--ink); }
+  .rsvp button.on-go{
+    background: var(--g, var(--accent));
+    border-color: var(--g, var(--accent));
+    color: #fff;
+    font-weight: 600;
+  }
+  .row .self-tag{
+    display: inline-flex; align-items: center;
+    padding: 6px 12px;
+    border-radius: 100px;
+    background: var(--bg-2);
+    color: var(--ink-3);
+    font-size: 11.5px; font-weight: 500;
+    border: 1px solid var(--rule);
+  }
+
+  .empty{
+    padding: 40px 22px;
+    text-align: center;
+    color: var(--ink-3);
+    font-size: 13px;
+    font-style: italic;
+    font-family: "Fraunces", serif;
+  }
+
+  @media (max-width: 980px){
+    .page{ grid-template-columns: 1fr; }
+    .strip{ flex-direction: column; align-items: flex-start; }
+    .week-body{ max-height: 460px; }
+  }
+
+  /* Login modal */
+  .modal-bg{
+    position: fixed; inset: 0;
+    background: rgba(42, 32, 24, 0.45);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 100;
+  }
+  .modal-bg.on{ display: flex; }
+  .modal{
+    background: var(--card);
+    border-radius: 16px;
+    padding: 32px;
+    width: 360px;
+    box-shadow: 0 16px 40px -10px rgba(60, 40, 20, 0.3);
+  }
+  .modal h2{
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+  }
+  .modal h2 em{ font-style: italic; color: var(--accent); }
+  .modal p.sub{
+    margin: 0 0 20px;
+    color: var(--ink-3);
+    font-size: 13px;
+  }
+  .modal label{
+    display: block;
+    font-size: 12px;
+    color: var(--ink-2);
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  .modal input{
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--rule-2);
+    background: var(--bg);
+    font: inherit;
+    font-size: 13px;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .modal input:focus{ outline: 2px solid var(--accent); outline-offset: -1px; border-color: var(--accent); }
+  .modal .err{
+    color: #B8623A;
+    font-size: 12px;
+    margin: -8px 0 12px;
+    min-height: 16px;
+  }
+  .modal .actions{ display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-top: 4px; }
+  .modal button.primary{
+    flex: 1;
+    padding: 11px 16px;
+    border-radius: 100px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 500;
+    font-size: 13px;
+  }
+  .modal button.primary:hover{ background: #234b2d; }
+  .modal a.toggle{
+    font-size: 12px;
+    color: var(--ink-3);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  /* Porch presence drawer */
+  .porch-drawer{
+    position: fixed;
+    bottom: 24px; right: 24px;
+    width: 320px;
+    background: var(--card);
+    border-radius: 14px;
+    border: 1px solid var(--rule);
+    box-shadow: 0 16px 40px -10px rgba(60, 40, 20, 0.3);
+    padding: 18px;
+    display: none;
+    z-index: 50;
+  }
+  .porch-drawer.on{ display: block; }
+  .porch-drawer h3{
+    margin: 0 0 4px;
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-size: 17px;
+  }
+  .porch-drawer p.sub{ margin: 0 0 14px; font-size: 12px; color: var(--ink-3); }
+  .porch-drawer input, .porch-drawer textarea{
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--rule-2);
+    background: var(--bg);
+    font: inherit;
+    font-size: 12.5px;
+    color: var(--ink);
+    margin-bottom: 10px;
+    resize: none;
+  }
+  .porch-drawer .row-btns{ display: flex; gap: 8px; }
+  .porch-drawer button{
+    flex: 1;
+    padding: 9px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--rule-2);
+    background: var(--card);
+    color: var(--ink-2);
+    font-weight: 500;
+    font-size: 12.5px;
+  }
+  .porch-drawer button.primary{
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .porch-drawer button.primary:hover{ background: #234b2d; }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="brand">
+    <span class="house" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 14L16 4l12 10"/>
+        <path d="M7 12v15h18V12"/>
+        <path d="M13 27v-7h6v7"/>
+        <path d="M2 14h28"/>
+      </svg>
+    </span>
+    Porch
+  </div>
+  <nav class="nav">
+    <a class="on">Home</a>
+    <a>Friends</a>
+    <a>Groups</a>
+    <a>History</a>
+  </nav>
+  <div class="hdr-right">
+    <button class="icon-btn" title="Notifications">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+      <span class="dot"></span>
+    </button>
+    <div class="avatar">G</div>
+  </div>
+</header>
+
+<div class="page">
+
+  <div class="strip">
+    <div class="greeting">
+      <h1>Hi <em>Grace</em>.</h1>
+      <p>Thursday, April 30 — a quiet evening, a few friends out and about.</p>
+    </div>
+    <button class="cta" id="imHere">
+      <span class="pulse"></span>
+      I'm on the porch
+    </button>
+  </div>
+
+  <section class="panel">
+    <div class="cal-head">
+      <div class="cal-title">
+        <span class="month">April 2026</span>
+        <span class="year">Week 18</span>
+      </div>
+      <div class="cal-nav">
+        <button class="icon" title="Previous">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></svg>
+        </button>
+        <button>Today</button>
+        <button class="icon" title="Next">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
+        </button>
+        <div class="seg">
+          <button>Day</button>
+          <button class="on">Week</button>
+          <button>Month</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-wrap">
+      <div class="week-head" id="weekHead"></div>
+      <div class="week-body" id="weekBody"></div>
+    </div>
+
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="panel">
+    <div class="feed-head">
+      <h2>What's <em>happening</em></h2>
+      <div class="group-tabs" id="groupTabs"></div>
+    </div>
+
+    <div class="feed" id="feed"></div>
+  </section>
+
+</div>
+
+<!-- Login modal -->
+<div class="modal-bg" id="loginBg">
+  <form class="modal" id="loginForm">
+    <h2>Welcome to <em>Porch</em></h2>
+    <p class="sub" id="loginSub">Sign in to see what your friends are up to.</p>
+
+    <div id="signupOnly" style="display:none">
+      <label>Name</label>
+      <input id="loginName" type="text" autocomplete="name" />
+    </div>
+    <label>Email</label>
+    <input id="loginEmail" type="email" autocomplete="email" required />
+    <label>Password</label>
+    <input id="loginPassword" type="password" autocomplete="current-password" required />
+    <div class="err" id="loginErr"></div>
+
+    <div class="actions">
+      <button class="primary" type="submit" id="loginSubmit">Sign in</button>
+      <a class="toggle" id="loginToggle">Need an account?</a>
+    </div>
+  </form>
+</div>
+
+<!-- "I'm on the porch" drawer -->
+<div class="porch-drawer" id="porchDrawer">
+  <h3>You're on the porch</h3>
+  <p class="sub">Tell your friends you're around.</p>
+  <input id="porchLocation" type="text" placeholder="Where? (optional)" maxlength="200" />
+  <textarea id="porchNote" rows="2" placeholder="Up for company? Anything to add?" maxlength="280"></textarea>
+  <div class="row-btns">
+    <button id="porchCancel">Cancel</button>
+    <button class="primary" id="porchSubmit">Broadcast</button>
+  </div>
+</div>
+
+<script>
+  // ---- API helpers ----------------------------------------------------
+  const API = "";  // same-origin
+  async function api(path, opts = {}) {
+    const r = await fetch(API + path, {
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json", ...(opts.headers || {}) },
+      ...opts,
+    });
+    if (r.status === 401) {
+      showLogin();
+      throw new Error("unauthorized");
+    }
+    if (!r.ok) {
+      let msg = `${r.status} ${r.statusText}`;
+      try { const j = await r.json(); if (j.detail) msg = typeof j.detail === "string" ? j.detail : JSON.stringify(j.detail); } catch {}
+      throw new Error(msg);
+    }
+    if (r.status === 204) return null;
+    return r.json();
+  }
+
+  // ---- Login modal ----------------------------------------------------
+  const loginBg = document.getElementById("loginBg");
+  const loginForm = document.getElementById("loginForm");
+  const loginSub = document.getElementById("loginSub");
+  const loginErr = document.getElementById("loginErr");
+  const loginToggle = document.getElementById("loginToggle");
+  const loginSubmit = document.getElementById("loginSubmit");
+  const signupOnly = document.getElementById("signupOnly");
+  let isSignup = false;
+
+  function showLogin() { loginBg.classList.add("on"); document.getElementById("loginEmail").focus(); }
+  function hideLogin() { loginBg.classList.remove("on"); loginErr.textContent = ""; }
+
+  loginToggle.addEventListener("click", () => {
+    isSignup = !isSignup;
+    signupOnly.style.display = isSignup ? "block" : "none";
+    loginSubmit.textContent = isSignup ? "Create account" : "Sign in";
+    loginToggle.textContent = isSignup ? "Have an account? Sign in" : "Need an account?";
+    loginSub.textContent = isSignup
+      ? "A few details to get you on the porch."
+      : "Sign in to see what your friends are up to.";
+    loginErr.textContent = "";
+  });
+
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    loginErr.textContent = "";
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    const display_name = document.getElementById("loginName").value.trim();
+    try {
+      if (isSignup) {
+        await api("/auth/signup", { method: "POST", body: JSON.stringify({ email, password, display_name }) });
+      } else {
+        await api("/auth/login", { method: "POST", body: JSON.stringify({ email, password }) });
+      }
+      hideLogin();
+      await init();
+    } catch (err) {
+      loginErr.textContent = err.message;
+    }
+  });
+
+  // ---- Calendar grid scaffolding -------------------------------------
+  const HOUR = 64, START = 7;
+  const DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  function startOfWeek(d) {
+    const out = new Date(d);
+    out.setHours(0, 0, 0, 0);
+    out.setDate(out.getDate() - out.getDay());  // Sunday
+    return out;
+  }
+  function addDays(d, n) { const o = new Date(d); o.setDate(o.getDate() + n); return o; }
+  function fmtTimeHr(h) {
+    const hr = Math.floor(h), m = Math.round((h - hr) * 60);
+    const ampm = hr >= 12 ? "PM" : "AM";
+    const h12 = hr % 12 || 12;
+    return m ? `${h12}:${String(m).padStart(2, "0")} ${ampm}` : `${h12} ${ampm}`;
+  }
+  function dayMonthLabel(d) {
+    return d.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
+  }
+
+  // ---- State ---------------------------------------------------------
+  let me = null;
+  let groups = [];               // [{id, slug, label, color}]
+  let groupBySlug = {};
+  let activeGroupSlug = "all";   // feed filter
+  let calendarEvents = [];
+
+  // ---- Render --------------------------------------------------------
+  function renderHeader() {
+    document.querySelector(".greeting h1").innerHTML = `Hi <em>${me.display_name}</em>.`;
+    document.querySelector(".avatar").textContent = me.initials;
+  }
+
+  function renderLegend() {
+    const el = document.getElementById("legend");
+    el.innerHTML = groups.map(g => `
+      <button class="leg" data-slug="${g.slug}" style="--g:${g.color}">
+        <span class="swatch"></span>${g.label}
+      </button>`).join("");
+  }
+
+  function renderTabs() {
+    const el = document.getElementById("groupTabs");
+    const all = `<button class="gtab all on" data-slug="all"><span class="swatch"></span>Everyone</button>`;
+    el.innerHTML = all + groups.map(g => `
+      <button class="gtab" data-slug="${g.slug}" style="--g:${g.color}">
+        <span class="swatch"></span>${g.label}
+      </button>`).join("");
+  }
+
+  function renderCalendar() {
+    const today = new Date();
+    const sow = startOfWeek(today);
+    const todayIdx = today.getDay();
+    const head = document.getElementById("weekHead");
+    const body = document.getElementById("weekBody");
+
+    let headHtml = '<div class="dow gutter"></div>';
+    for (let i = 0; i < 7; i++) {
+      const d = addDays(sow, i);
+      headHtml += `<div class="dow ${i === todayIdx ? 'today' : ''}">${DOW[i]}<span class="num">${d.getDate()}</span></div>`;
+    }
+    head.innerHTML = headHtml;
+
+    let html = '<div class="gutter-col">';
+    for (let h = START + 1; h <= 22; h++) {
+      const label = h === 12 ? "12 PM" : h > 12 ? `${h - 12} PM` : `${h} AM`;
+      html += `<div class="hour" style="top:${(h - START) * HOUR}px">${label}</div>`;
+    }
+    html += '</div>';
+
+    for (let i = 0; i < 7; i++) {
+      html += `<div class="day-col ${i === todayIdx ? 'today' : ''}" data-day="${i}">`;
+      if (i === todayIdx) {
+        const nowH = today.getHours() + today.getMinutes() / 60;
+        if (nowH >= START && nowH <= 22) {
+          html += `<div class="now-line" style="top:${(nowH - START) * HOUR}px"></div>`;
+        }
+      }
+      const dayStart = addDays(sow, i);
+      const dayEnd = addDays(dayStart, 1);
+      calendarEvents
+        .filter(ev => {
+          const s = new Date(ev.starts_at);
+          return s >= dayStart && s < dayEnd;
+        })
+        .forEach(ev => {
+          const s = new Date(ev.starts_at), e = new Date(ev.ends_at);
+          const startHr = s.getHours() + s.getMinutes() / 60;
+          const durHr = (e - s) / 3600000;
+          const top = (startHr - START) * HOUR;
+          const h = Math.max(durHr * HOUR, 36);
+          const color = ev.group?.color || "#2A2018";
+          const slug = ev.group?.slug || "";
+          const tcls = ev.tentative ? "tentative" : "";
+          html += `
+            <div class="ev ${tcls}" data-slug="${slug}" style="top:${top}px;height:${h}px;--g:${color}">
+              <div class="ev-title">${escapeHtml(ev.title)}</div>
+              <div class="ev-meta">${fmtTimeHr(startHr)} · ${durHr}h</div>
+            </div>`;
+        });
+      html += '</div>';
+    }
+    body.innerHTML = html;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+
+  async function loadFeed() {
+    const slug = activeGroupSlug === "all" ? "" : `&group_slug=${activeGroupSlug}`;
+    const days = await api(`/feed?days=7${slug}`);
+    const feedEl = document.getElementById("feed");
+    if (!days.length) {
+      feedEl.innerHTML = `<div class="empty">No plans here yet — quiet on this porch.</div>`;
+      return;
+    }
+    feedEl.innerHTML = days.map(d => `
+      <div class="feed-day"><strong>${d.label}</strong>${d.note}</div>
+      ${d.items.map(it => {
+        const ev = it.event;
+        const color = ev.group?.color || "#2A2018";
+        const grpLabel = ev.group?.label || "";
+        const time = (() => {
+          const s = new Date(ev.starts_at);
+          return s.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+        })();
+        return `
+          <div class="row" style="--g:${color}" data-event-id="${ev.id}">
+            <div class="stripe"></div>
+            <div class="stripe-spacer"></div>
+            <div class="body">
+              <div class="who">
+                <span class="av" style="background:${color}">${ev.owner.initials}</span>
+                <span class="name">${escapeHtml(ev.owner.display_name)}</span>
+                <span class="grp" style="color:${color}">· ${escapeHtml(grpLabel)}</span>
+              </div>
+              <h3 class="title">${escapeHtml(ev.title)}</h3>
+              <div class="meta"><span class="when">${time}</span>${ev.venue ? " · " + escapeHtml(ev.venue) : ""}</div>
+            </div>
+            ${it.is_mine
+              ? `<div class="rsvp"><span class="self-tag">Your event</span></div>`
+              : `<div class="rsvp">
+                  <button class="${it.my_rsvp === 'going' ? 'on-go' : ''}" style="--g:${color}">
+                    ${it.my_rsvp === 'going' ? 'Going' : 'Join'}
+                  </button>
+                </div>`}
+          </div>`;
+      }).join("")}
+    `).join("");
+  }
+
+  // ---- Filters / interactions ----------------------------------------
+  document.getElementById("legend").addEventListener("click", e => {
+    const b = e.target.closest(".leg");
+    if (!b) return;
+    b.classList.toggle("off");
+    const off = new Set([...document.querySelectorAll(".leg.off")].map(x => x.dataset.slug));
+    document.querySelectorAll(".ev").forEach(ev => {
+      ev.style.display = off.has(ev.dataset.slug) ? "none" : "";
+    });
+  });
+
+  document.getElementById("groupTabs").addEventListener("click", async e => {
+    const b = e.target.closest(".gtab");
+    if (!b) return;
+    document.querySelectorAll("#groupTabs .gtab").forEach(t => t.classList.remove("on"));
+    b.classList.add("on");
+    activeGroupSlug = b.dataset.slug;
+    await loadFeed();
+  });
+
+  document.getElementById("feed").addEventListener("click", async e => {
+    const btn = e.target.closest(".rsvp button");
+    if (!btn) return;
+    e.stopPropagation();
+    const row = btn.closest(".row");
+    const eventId = row?.dataset.eventId;
+    if (!eventId) return;
+    const goingNow = btn.classList.contains("on-go");
+    btn.disabled = true;
+    try {
+      if (goingNow) {
+        await api(`/rsvps/${eventId}`, { method: "DELETE" });
+        btn.classList.remove("on-go");
+        btn.textContent = "Join";
+      } else {
+        await api(`/rsvps/${eventId}`, { method: "PUT", body: JSON.stringify({ status: "going" }) });
+        btn.classList.add("on-go");
+        btn.textContent = "Going";
+      }
+    } catch (err) {
+      alert("Could not update RSVP: " + err.message);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  // ---- "I'm on the porch" --------------------------------------------
+  const porchDrawer = document.getElementById("porchDrawer");
+  document.getElementById("imHere").addEventListener("click", () => {
+    porchDrawer.classList.toggle("on");
+    if (porchDrawer.classList.contains("on")) document.getElementById("porchLocation").focus();
+  });
+  document.getElementById("porchCancel").addEventListener("click", () => porchDrawer.classList.remove("on"));
+  document.getElementById("porchSubmit").addEventListener("click", async () => {
+    const location = document.getElementById("porchLocation").value.trim() || null;
+    const note = document.getElementById("porchNote").value.trim() || null;
+    try {
+      await api("/presence/porch", {
+        method: "POST",
+        body: JSON.stringify({ location, note, visibility: "everyone", duration_minutes: 120 }),
+      });
+      porchDrawer.classList.remove("on");
+      document.getElementById("porchNote").value = "";
+      document.getElementById("porchLocation").value = "";
+    } catch (err) {
+      alert("Could not broadcast: " + err.message);
+    }
+  });
+
+  // ---- Init ----------------------------------------------------------
+  async function init() {
+    try { me = await api("/auth/me"); }
+    catch { return; }  // showLogin already triggered
+    renderHeader();
+    groups = await api("/groups");
+    groupBySlug = Object.fromEntries(groups.map(g => [g.slug, g]));
+    renderLegend();
+    renderTabs();
+
+    const today = new Date();
+    const sow = startOfWeek(today);
+    const eow = addDays(sow, 7);
+    calendarEvents = await api(
+      `/events?start=${encodeURIComponent(sow.toISOString())}&end=${encodeURIComponent(eow.toISOString())}`
+    );
+    renderCalendar();
+    await loadFeed();
+  }
+
+  init();
+</script>
+</body>
+</html>
